@@ -19,6 +19,9 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
+import locale from 'element-ui/lib/locale/lang/zh-CN'
+
+Vue.use(Element, locale)
 
 /**
  * If you don't want to use mock-server
