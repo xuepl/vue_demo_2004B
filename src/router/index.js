@@ -130,6 +130,35 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/test',
+    component: Layout,
+    redirect: '/test/suite',
+    meta: { title: '测试管理', icon: 'tree-table' },
+    children: [
+      {
+        path: 'suite',
+        component: () => import('@/views/case/SuiteList.vue'),
+        name: 'testSuite',
+        meta: { title: '测试用例集', icon: 'chart' }
+
+      },
+      {
+        path: 'case',
+        component: () => import('@/views/case/CaseList.vue'),
+        name: 'testCase',
+        meta: { title: '用例列表', icon: 'list' }
+
+      },
+      {
+        path: 'api',
+        component: () => import('@/views/case/APIList.vue'),
+        name: 'testAPI',
+        meta: { title: '接口列表', icon: 'nested' }
+
+      }
+    ]
+  },
 
   /** when your routing map is too long, you can split it into small modules **/
   nestedRouter,
