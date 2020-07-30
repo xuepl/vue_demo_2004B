@@ -250,7 +250,7 @@ export default {
       })
     },
     deleteHostEvent() {
-      deleteHostRequest(this.projectId).then(response => {
+      deleteHostRequest(this.apiId).then(response => {
         this.$message.success('删除成功')
         this.deleteHostDialogCloseEvent()
         this.getHostListEvent()
