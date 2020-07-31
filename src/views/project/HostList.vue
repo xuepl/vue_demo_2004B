@@ -187,6 +187,8 @@ export default {
           this.hostsList = response.data.results
           this.$message.success(response.message)
         })
+      } else {
+        this.$message.error('查询失败，请选择项目')
       }
     },
 

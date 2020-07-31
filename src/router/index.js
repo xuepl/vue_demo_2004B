@@ -147,24 +147,42 @@ export const asyncRoutes = [
         path: 'case',
         component: () => import('@/views/case/CaseList.vue'),
         name: 'testCase',
+        hidden: true,
         meta: { title: '用例列表', icon: 'list' }
 
       },
       {
-        path: 'api',
+        path: 'case/:suite_id',
+        component: () => import('@/views/case/CaseList.vue'),
+        name: 'testSuiteCase',
+        hidden: true,
+        meta: { title: '用例列表', icon: 'list' }
+
+      },
+      {
+        path: 'api/:case_id',
         component: () => import('@/views/case/APIList.vue'),
-        name: 'testAPI',
+        name: 'testCaseAPI',
+        hidden: true,
         meta: { title: '接口列表', icon: 'nested' }
+
+      },
+      {
+        path: 'addApi/:case_id',
+        component: () => import('@/views/case/APIList.vue'),
+        name: 'addCaseAPI',
+        hidden: true,
+        meta: { title: '新增接口', icon: 'nested' }
 
       }
     ]
   },
 
   /** when your routing map is too long, you can split it into small modules **/
-  nestedRouter,
+  nestedRouter
 
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

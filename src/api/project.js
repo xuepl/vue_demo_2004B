@@ -80,3 +80,117 @@ export function deleteHostRequest(id) {
     baseURL: baseURL
   })
 }
+
+export function suiteListRequest(query) {
+  return request({
+    url: '/suites',
+    method: 'get',
+    params: query,
+    baseURL: baseURL
+  })
+}
+
+export function addSuiteRequest(data) {
+  return request({
+    url: '/suites',
+    method: 'post',
+    baseURL: baseURL,
+    data
+  })
+}
+
+export function updateSuiteRequest(id, data) {
+  return request({
+    url: `/suites/${id}`,
+    method: 'put',
+    baseURL: baseURL,
+    data
+  })
+}
+
+export function deleteSuiteRequest(id) {
+  return request({
+    url: `/suites/${id}`,
+    method: 'delete',
+    baseURL: baseURL
+  })
+}
+
+export function caseListRequest(query) {
+  return request({
+    url: '/cases',
+    method: 'get',
+    params: query,
+    baseURL: baseURL
+  })
+}
+
+export function addCaseRequest(data) {
+  return request({
+    url: '/cases',
+    method: 'post',
+    baseURL: baseURL,
+    data
+  })
+}
+
+export function updateCaseRequest(id, data) {
+  return request({
+    url: `/cases/${id}`,
+    method: 'put',
+    baseURL: baseURL,
+    data
+  })
+}
+
+export function deleteCaseRequest(id) {
+  return request({
+    url: `/cases/${id}`,
+    method: 'delete',
+    baseURL: baseURL
+  })
+}
+
+export function apiListRequest(query) {
+  return request({
+    url: '/api',
+    method: 'get',
+    params: query,
+    baseURL: baseURL
+  })
+}
+
+export function addAPIRequest(data) {
+  return request({
+    url: '/api',
+    method: 'post',
+    baseURL: baseURL,
+    data
+  })
+}
+
+export function updateAPIRequest(id, data) {
+  return request({
+    url: `/api/${id}`,
+    method: 'put',
+    baseURL: baseURL,
+    data
+  })
+}
+
+export function deleteAPIRequest(id) {
+  return request({
+    url: `/api/${id}`,
+    method: 'delete',
+    baseURL: baseURL
+  })
+}
+
+export function runAPIRequest(data) {
+  return request({
+    url: '/runApi',
+    method: 'post',
+    baseURL: baseURL,
+    data
+  })
+}
