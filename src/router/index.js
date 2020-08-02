@@ -144,14 +144,6 @@ export const asyncRoutes = [
 
       },
       {
-        path: 'case',
-        component: () => import('@/views/case/CaseList.vue'),
-        name: 'testCase',
-        hidden: true,
-        meta: { title: '用例列表', icon: 'list' }
-
-      },
-      {
         path: 'case/:suite_id',
         component: () => import('@/views/case/CaseList.vue'),
         name: 'testSuiteCase',
