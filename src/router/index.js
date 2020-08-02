@@ -161,7 +161,7 @@ export const asyncRoutes = [
       },
       {
         path: 'addApi/:case_id',
-        component: () => import('@/views/case/APIList.vue'),
+        component: () => import('@/views/case/AddAPI.vue'),
         name: 'addCaseAPI',
         hidden: true,
         meta: { title: '新增接口', icon: 'nested' }

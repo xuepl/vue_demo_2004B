@@ -94,7 +94,7 @@
 
     <!--修改主机对话框-->
     <el-dialog
-      title="新增主机"
+      title="修改主机"
       :visible.sync="updateHostDialogVisible"
       width="30%"
       :before-close="updateHostDialogCloseEvent"

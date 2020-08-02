@@ -12,7 +12,8 @@
               <el-button type="primary" @click="getAPIListEvent">查询</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="$router.push({name:'addApi', params: CaseId})">新增</el-button>
+              <el-button type="primary" @click="$router.push({name:'addCaseAPI', params: {case_id:caseId}})">新增
+              </el-button>
             </el-form-item>
           </el-form>
         </el-col>
