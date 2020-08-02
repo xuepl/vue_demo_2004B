@@ -220,8 +220,8 @@ export default {
         query['name'] = this.apiName
       }
       apiListRequest(query).then(response => {
+        this.total = response.data.count
         this.apiList = response.data.results
-        console.log(this.apiList)
         this.$message.success(response.message)
       })
     },

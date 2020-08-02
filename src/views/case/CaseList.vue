@@ -177,6 +177,7 @@ export default {
       console.log(query)
       caseListRequest(query).then(response => {
         this.caseList = response.data.results
+        this.total = response.data.count
         this.$message.success(response.message)
       })
     },
