@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <el-card>
       <el-row>
         <el-col :span="10">
@@ -54,14 +53,19 @@
         <el-table-column label="测试结果">
           <template slot-scope="scope">
             <el-link v-if="scope.row.result===2" type="info" disabled>未运行</el-link>
-            <el-link v-else-if="scope.row.result===1" type="success">查看结果</el-link>
+            <el-link
+              v-else-if="scope.row.result===1"
+              type="success"
+            >查看结果
+            </el-link>
             <el-link v-else-if="scope.row.result===0" type="danger">运行失败</el-link>
           </template>
         </el-table-column>
         <el-table-column show-overflow-tooltip label="操作">
           <template slot-scope="scope">
             <el-button size="mini" type="success" @click="runAPI(scope.row)">运行</el-button>
-            <el-button size="mini" @click="openUpdateAPIDialogEvent(scope.row)">修改</el-button>
+            <el-button size="mini" @click="$router.push({name:'updateCaseAPI',params:{api_id:scope.row.id}})">修改
+            </el-button>
             <el-button type="danger" size="mini" @click="openDeleteAPIDialogEvent(scope.row)">删除</el-button>
           </template>
         </el-table-column>
@@ -139,6 +143,7 @@
         <el-button type="primary" @click="deleteAPIEvent">确 定</el-button>
       </span>
     </el-dialog>
+
   </div>
 </template>
 

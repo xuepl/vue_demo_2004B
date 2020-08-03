@@ -147,24 +147,28 @@ export const asyncRoutes = [
         path: 'case/:suite_id',
         component: () => import('@/views/case/CaseList.vue'),
         name: 'testSuiteCase',
-        hidden: true,
-        meta: { title: '用例列表', icon: 'list' }
+        hidden: true
 
       },
       {
         path: 'api/:case_id',
         component: () => import('@/views/case/APIList.vue'),
         name: 'testCaseAPI',
-        hidden: true,
-        meta: { title: '接口列表', icon: 'nested' }
+        hidden: true
 
       },
       {
         path: 'addApi/:case_id',
         component: () => import('@/views/case/AddAPI.vue'),
         name: 'addCaseAPI',
-        hidden: true,
-        meta: { title: '新增接口', icon: 'nested' }
+        hidden: true
+
+      },
+      {
+        path: 'updateAPI/:api_id',
+        component: () => import('@/views/case/UpdateAPI.vue'),
+        name: 'updateCaseAPI',
+        hidden: true
 
       }
     ]

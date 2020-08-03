@@ -18,10 +18,10 @@
     <!--请求行-->
     <el-card shadow="always">
       <el-form ref="apiForm" :model="apiForm" :rules="apiFormRules" label-width="80px">
-        <el-form-item label="接口名称">
+        <el-form-item label="接口名称" prop="name">
           <el-input v-model="apiForm.name" />
         </el-form-item>
-        <el-form-item label="url">
+        <el-form-item label="url" prop="url">
           <el-row type="flex" justify="space-between">
             <el-col :span="3">
               <el-select v-model="apiForm.method" placeholder="请选择">
@@ -52,7 +52,7 @@
     </el-card>
     <el-collapse v-model="activeNames">
       <el-collapse-item title="请求头部" name="1">
-        <el-form ref="apiForm" :rules="apiFormRules">
+        <el-form :rules="apiFormRules">
           <el-form-item label="">
             <el-table
               :data="apiForm.headers"
@@ -89,7 +89,7 @@
         </el-form>
       </el-collapse-item>
       <el-collapse-item title="请求参数" name="2">
-        <el-form ref="apiForm" :model="apiForm">
+        <el-form :model="apiForm">
           <el-form-item label="">
             <el-tabs type="border-card">
               <el-tab-pane>
@@ -146,7 +146,7 @@
         </el-form>
       </el-collapse-item>
       <el-collapse-item title="响应断言" name="3">
-        <el-form ref="apiForm" :model="apiForm">
+        <el-form :model="apiForm">
           <el-form-item label="">
             <el-table
               :data="apiForm.APIAssert"
@@ -199,7 +199,7 @@
         </el-form>
       </el-collapse-item>
       <el-collapse-item title="提取响应数据" name="4">
-        <el-form ref="apiForm" :model="apiForm">
+        <el-form :model="apiForm">
           <el-form-item label="">
             <el-table
               :data="apiForm.APIRelate"
@@ -309,9 +309,7 @@ export default {
         APIRelate: [{ 'name': '', 'pattern': '', 'type': '' }]
       },
       apiFormRules: {
-        http: [{ required: true, message: '请选择协议类型', trigger: 'blur' }],
         name: [{ required: true, message: '请输入接口名称', trigger: 'blur' }],
-        method: [{ required: true, message: '请选择请求方法', trigger: 'blur' }],
         url: [{ required: true, message: '请输入接口地址', trigger: 'blur' }]
       }
 
@@ -348,7 +346,7 @@ export default {
       }
     },
     addAPIDialogCloseEvent() {
-      // this.$refs.apiForm.resetFields()
+      this.$refs.apiForm.resetFields()
       this.addAPIDialogVisible = false
     },
     addAPIEvent() {
