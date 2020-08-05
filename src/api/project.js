@@ -195,3 +195,10 @@ export function runAPIRequest(data) {
   })
 }
 
+export function getAPIResultRequest(id) {
+  return request({
+    url: `/getApiResult/${id}`,
+    method: 'get',
+    baseURL: baseURL
+  })
+}

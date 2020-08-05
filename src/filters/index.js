@@ -70,3 +70,27 @@ export function uppercaseFirst(string) {
 export function dateOnly(value) {
   return value.split(' ')[0]
 }
+
+export function assertType(value) {
+  if (value === 'json') {
+    return 'json断言'
+  } else if (value === 'reg') {
+    return '正则表达式断言'
+  } else if (value === 'contains') {
+    return '响应正文断言'
+  } else if (value === 'status_code') {
+    return '响应状态码断言'
+  } else {
+    return '未知断言类型'
+  }
+}
+
+export function relateType(value) {
+  if (value === 'json') {
+    return 'json提取'
+  } else if (value === 'reg') {
+    return '正则表达式提取'
+  } else {
+    return '未知提取类型'
+  }
+}

@@ -5,7 +5,7 @@
         <el-button
           icon="el-icon-d-arrow-left"
           class="radiuButton"
-          @click="$router.push({name:'testCaseAPI',params:{case_id:caseId}})"
+          @click="$router.push({name:'testCaseAPI',params:{case_id:apiForm.case_id}})"
         >返回用例列表
         </el-button>
       </el-col>
@@ -297,7 +297,6 @@ export default {
       ],
       apiForm: {
         http: 'HTTP',
-        case_id: null,
         name: '',
         method: 'GET',
         url: '',

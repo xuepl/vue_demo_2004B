@@ -20,7 +20,9 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 import locale from 'element-ui/lib/locale/lang/zh-CN'
+import JsonViewer from 'vue-json-viewer'
 
+Vue.use(JsonViewer)
 Vue.use(Element, locale)
 
 /**

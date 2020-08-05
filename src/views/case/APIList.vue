@@ -56,9 +56,11 @@
             <el-link
               v-else-if="scope.row.result===1"
               type="success"
+              @click="apiResultDialogOpenEvent(scope.row)"
             >查看结果
             </el-link>
-            <el-link v-else-if="scope.row.result===0" type="danger">运行失败</el-link>
+            <el-link v-else-if="scope.row.result===0" type="danger" @click="apiResultDialogOpenEvent(scope.row)">运行失败
+            </el-link>
           </template>
         </el-table-column>
         <el-table-column show-overflow-tooltip label="操作">
@@ -143,7 +145,87 @@
         <el-button type="primary" @click="deleteAPIEvent">确 定</el-button>
       </span>
     </el-dialog>
+    <!--查看测试结果对话框-->
+    <el-dialog
+      title="测试结果"
+      :visible.sync="apiResultDialogVisible"
+      width="80%"
+      :before-close="apiResultDialogCloseEvent"
+    >
+      <el-collapse v-model="apiResultCollapseActiveNames">
+        <el-collapse-item title="请求报文" name="1">
 
+          <el-form label-width="100px">
+            <el-form-item label="请求方法：">
+              {{ apiResult.request_method }}
+            </el-form-item>
+            <el-form-item label="请求url：">
+              {{ apiResult.request_url }}
+            </el-form-item>
+            <el-form-item label="请求头：">
+              <json-viewer :value="apiResult.request_headers" />
+            </el-form-item>
+            <el-form-item label="请求体：">
+              <json-viewer :value="apiResult.request_body" />
+            </el-form-item>
+          </el-form>
+        </el-collapse-item>
+        <el-collapse-item title="响应报文" name="2">
+          <el-form label-width="100px">
+            <el-form-item label="响应状态码：">
+              {{ apiResult.status_code }}
+            </el-form-item>
+            <el-form-item label="响应头：">
+              <json-viewer :value="apiResult.response_headers" />
+            </el-form-item>
+            <el-form-item label="响应正文：">
+              <json-viewer :value="apiResult.response_body" />
+            </el-form-item>
+          </el-form>
+        </el-collapse-item>
+        <el-collapse-item title="断言" name="3">
+          <el-form label-width="100px">
+            <template v-for="item in apiResult.assert_list">
+              <el-form-item :key="item.index" label="断言方式：">
+                {{ item.type | assertType }}
+              </el-form-item>
+              <el-form-item :key="item.index" label="匹配规则：">
+                {{ item.pattern }}
+              </el-form-item>
+              <el-form-item :key="item.index" label="预期结果：">
+                {{ item.expect }}
+              </el-form-item>
+              <el-divider :key="item.index" />
+            </template>
+            <el-form-item label="通过与否：">
+              {{ apiResult.assert_result ? '通过': '不通过' }}
+            </el-form-item>
+          </el-form>
+        </el-collapse-item>
+        <el-collapse-item title="接口变量提取" name="4">
+          <el-form label-width="100px">
+            <template v-for="item in apiResult.relate_list">
+              <el-form-item :key="item.index" label="变量名：">
+                {{ item.type | relateType }}
+              </el-form-item>
+              <el-form-item :key="item.index" label="断言方式：">
+                {{ item.type | relateType }}
+              </el-form-item>
+              <el-form-item :key="item.index" label="匹配规则：">
+                {{ item.pattern }}
+              </el-form-item>
+              <el-form-item :key="item.index" label="变量值：">
+                {{ item.value }}
+              </el-form-item>
+              <el-divider :key="item.index" />
+            </template>
+          </el-form>
+        </el-collapse-item>
+      </el-collapse>
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="apiResultDialogCloseEvent">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -154,7 +236,8 @@ import {
   updateAPIRequest,
   deleteAPIRequest,
   hostListRequest,
-  runAPIRequest
+  runAPIRequest,
+  getAPIResultRequest
 } from '@/api/project.js'
 import { sleep } from '@/utils/sleep.js'
 import { mapGetters } from 'vuex'
@@ -166,6 +249,7 @@ export default {
       apiName: '',
       projectList: [],
       apiList: [],
+      apiResult: {},
       CaseId: null,
       apiId: null,
       hostId: null,
@@ -173,6 +257,8 @@ export default {
       addAPIDialogVisible: false,
       updateAPIDialogVisible: false,
       deleteAPIDialogVisible: false,
+      apiResultDialogVisible: false,
+      apiResultCollapseActiveNames: [],
       currentPage: 1,
       hostList: [],
       size: 10,
@@ -258,6 +344,23 @@ export default {
     },
     deleteAPIDialogCloseEvent() {
       this.deleteAPIDialogVisible = false
+    },
+    apiResultDialogCloseEvent() {
+      this.apiResultDialogVisible = false
+    },
+    apiResultDialogOpenEvent(row) {
+      getAPIResultRequest(row.id).then(response => {
+        this.apiResult = response.data
+        try {
+          this.apiResult.request_headers = JSON.parse(this.apiResult.request_headers)
+          this.apiResult.response_headers = JSON.parse(this.apiResult.response_headers)
+          this.apiResult.response_body = JSON.parse(this.apiResult.response_body)
+          this.apiResult.request_body = JSON.parse(this.apiResult.request_body)
+        } catch (e) {
+          console.log(e)
+        }
+        this.apiResultDialogVisible = true
+      })
     },
 
     addAPIEvent() {
