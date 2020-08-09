@@ -91,8 +91,8 @@
       <el-collapse-item title="请求参数" name="2">
         <el-form :model="apiForm">
           <el-form-item label="">
-            <el-tabs type="border-card">
-              <el-tab-pane>
+            <el-tabs v-model="apiForm.dataType" type="border-card">
+              <el-tab-pane name="formdata">
                 <span slot="label"><el-radio
                   v-model="apiForm.dataType"
                   label="formdata"
@@ -132,7 +132,7 @@
                   </el-table-column>
                 </el-table>
               </el-tab-pane>
-              <el-tab-pane>
+              <el-tab-pane name="raw">
                 <span slot="label"><el-radio v-model="apiForm.dataType" label="raw">源数据(raw)</el-radio></span>
                 <el-input
                   v-model="apiForm.body"
@@ -149,7 +149,7 @@
         <el-form :model="apiForm">
           <el-form-item label="">
             <el-table
-              :data="apiForm.APIAssert"
+              :data="apiForm.api_assert"
               style="width: 100%"
             >
               <el-table-column
@@ -189,8 +189,12 @@
                 label="操作"
               >
                 <template slot-scope="scope">
-                  <el-button type="danger" icon="el-icon-delete" @click="removeFormEvent(apiForm.APIAssert,scope.row)" />
-                  <el-button icon="el-icon-plus" @click="addFormEvent(apiForm.APIAssert,scope.row)" />
+                  <el-button
+                    type="danger"
+                    icon="el-icon-delete"
+                    @click="removeFormEvent(apiForm.api_assert,scope.row)"
+                  />
+                  <el-button icon="el-icon-plus" @click="addFormEvent(apiForm.api_assert,scope.row)" />
                 </template>
               </el-table-column>
             </el-table>
@@ -202,7 +206,7 @@
         <el-form :model="apiForm">
           <el-form-item label="">
             <el-table
-              :data="apiForm.APIRelate"
+              :data="apiForm.api_relate"
               style="width: 100%"
             >
               <el-table-column
@@ -240,8 +244,12 @@
                 label="操作"
               >
                 <template slot-scope="scope">
-                  <el-button type="danger" icon="el-icon-delete" @click="removeFormEvent(apiForm.APIRelate,scope.row)" />
-                  <el-button icon="el-icon-plus" @click="addFormEvent(apiForm.APIRelate,scope.row)" />
+                  <el-button
+                    type="danger"
+                    icon="el-icon-delete"
+                    @click="removeFormEvent(apiForm.api_relate,scope.row)"
+                  />
+                  <el-button icon="el-icon-plus" @click="addFormEvent(apiForm.api_relate,scope.row)" />
                 </template>
               </el-table-column>
             </el-table>
@@ -267,7 +275,7 @@
 </template>
 
 <script>
-import { addAPIRequest, getAPIDetailRequest } from '@/api/project'
+import { updateAPIRequest, getAPIDetailRequest } from '@/api/project'
 import { json_to_obj } from '@/utils/dataFormat.js'
 
 export default {
@@ -305,8 +313,8 @@ export default {
         headers: [{ 'name': 'Content-Type', 'value': 'application/json' }],
         params: [{ 'name': '', 'value': '' }],
         body: '',
-        APIAssert: [{ 'type': '', 'pattern': '', 'expect': '' }],
-        APIRelate: [{ 'name': '', 'pattern': '', 'type': '' }]
+        api_assert: [{ 'type': '', 'pattern': '', 'expect': '' }],
+        api_relate: [{ 'name': '', 'pattern': '', 'type': '' }]
       },
       apiFormRules: {
         name: [{ required: true, message: '请输入接口名称', trigger: 'blur' }],
@@ -333,6 +341,12 @@ export default {
           this.apiForm.params = json_to_obj(this.apiForm.params)
         } else {
           this.apiForm.params = [{ 'name': '', 'value': '' }]
+        }
+        if (this.apiForm.api_assert.length === 0) {
+          this.apiForm.api_assert = [{ 'type': '', 'pattern': '', 'expect': '' }]
+        }
+        if (this.apiForm.api_relate.length === 0) {
+          this.apiForm.api_relate = [{ 'name': '', 'pattern': '', 'type': '' }]
         }
       })
     },
@@ -366,7 +380,7 @@ export default {
     },
     addAPIEvent() {
       this.addAPIDialogVisible = false
-      addAPIRequest(this.apiForm).then(response => {
+      updateAPIRequest(this.apiForm.id, this.apiForm).then(response => {
         this.$message.success(response.message)
         this.$router.push({ name: 'testCaseAPI', params: { case_id: this.apiForm.case_id }})
       })
