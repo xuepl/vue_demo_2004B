@@ -206,7 +206,7 @@
           <el-form label-width="100px">
             <template v-for="item in apiResult.relate_list">
               <el-form-item :key="item.index" label="变量名：">
-                {{ item.type | relateType }}
+                {{ item.name }}
               </el-form-item>
               <el-form-item :key="item.index" label="断言方式：">
                 {{ item.type | relateType }}

@@ -185,6 +185,13 @@ export function deleteAPIRequest(id) {
     baseURL: baseURL
   })
 }
+export function getAPIDetailRequest(id) {
+  return request({
+    url: `/api/${id}`,
+    method: 'get',
+    baseURL: baseURL
+  })
+}
 
 export function runAPIRequest(data) {
   return request({
